@@ -32,6 +32,6 @@ public class DomainRandomizationDNN : ModuleRules
             PublicDependencyModuleNames.Add("AssetRegistry");
         }
 
-        PublicIncludePaths.AddRange(new string[] { "DomainRandomizationDNN/Public" });
+        //PublicIncludePaths.AddRange(new string[] { "DomainRandomizationDNN/Public" });
     }
 }

@@ -8,11 +8,11 @@
 #include "NVAnnotatedActor.h"
 #include "NVCoordinateComponent.h"
 #include "Components/StaticMeshComponent.h"
-#include "Factories/FbxAssetImportData.h"
 #include "Engine.h"
 #if WITH_EDITOR
 #include "UnrealEdGlobals.h"
 #include "Editor/UnrealEdEngine.h"
+#include "Factories/FbxAssetImportData.h"
 #endif
 
 ANVAnnotatedActor::ANVAnnotatedActor(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -149,7 +149,7 @@ FMatrix ANVAnnotatedActor::CalculatePCA(const class UStaticMesh* Mesh)
         TArray<FVector> MeshVertices;
         MeshVertices.Reset();
 
-        const FPositionVertexBuffer& MeshVertexBuffer = Mesh->RenderData->LODResources[0].PositionVertexBuffer;
+        const FPositionVertexBuffer& MeshVertexBuffer = Mesh->RenderData->LODResources[0].VertexBuffers.PositionVertexBuffer;
         const uint32 VertexesCount = MeshVertexBuffer.GetNumVertices();
         if (VertexesCount != 0)
         {
@@ -242,6 +242,7 @@ FMatrix ANVAnnotatedActor::GetMeshInitialMatrix() const
     FMatrix ResultFMatrix = FMatrix::Identity;
 
     UStaticMesh* ActorStaticMesh = MeshComponent ? MeshComponent->GetStaticMesh() : nullptr;
+#if WITH_EDITORONLY_DATA
     if (ActorStaticMesh)
     {
         UFbxAssetImportData* FbxAssetImportData = Cast<UFbxAssetImportData>(ActorStaticMesh->AssetImportData);
@@ -271,5 +272,6 @@ FMatrix ANVAnnotatedActor::GetMeshInitialMatrix() const
         MeshInitialMatrix_OpenCV.SetAxes(nullptr, &MatY, nullptr);
         ResultFMatrix = MeshInitialMatrix_OpenCV;
     }
+#endif // WITH_EDITORONLY_DATA
     return ResultFMatrix;
 }

@@ -11,8 +11,8 @@ public class NVDataObject : ModuleRules
 {
 	public NVDataObject(ReadOnlyTargetRules Target) : base(Target)
 	{
-		PrivateIncludePaths.AddRange(new string[] { "NVDataObject/Private" });
-		PublicIncludePaths.AddRange(new string[] { "NVDataObject/Public" });
+		//PrivateIncludePaths.AddRange(new string[] { "NVDataObject/Private" });
+		//PublicIncludePaths.AddRange(new string[] { "NVDataObject/Public" });
  
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "Json", "JsonUtilities", "InputCore"});
         PrivateDependencyModuleNames.AddRange(new string[] { });

@@ -11,12 +11,11 @@
 #include "NVSceneManager.h"
 #include "NVSceneMarker.h"
 #include "Components/StaticMeshComponent.h"
-#include "Factories/FbxAssetImportData.h"
 #include "Engine.h"
 #if WITH_EDITOR
 #include "UnrealEdGlobals.h"
 #include "Editor/UnrealEdEngine.h"
-#endif
+#endif //WITH_EDITOR
 
 namespace
 {
@@ -301,7 +300,9 @@ void ANVSceneManager::OnCapturingCompleted(ANVSceneCapturerActor* SceneCapturer,
                     UWorld* World = GetWorld();
                     if (World && GEngine)
                     {
-                        GEngine->Exec(World, TEXT("exit"));
+                        UE_LOG(LogNVSceneCapturer, Warning, TEXT("ANVSceneManager triggering platform exit"));
+                        //GEngine->Exec(World, TEXT("exit"));
+                        FGenericPlatformMisc::RequestExit(false);
                     }
                 }
             }

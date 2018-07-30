@@ -11,8 +11,8 @@ public class NVSceneCapturer : ModuleRules
 {
 	public NVSceneCapturer(ReadOnlyTargetRules Target) : base(Target)
 	{
-		PrivateIncludePaths.AddRange(new string[] { "NVSceneCapturer/Private" });
-		PublicIncludePaths.AddRange(new string[] { "NVSceneCapturer/Public" });
+		//PrivateIncludePaths.AddRange(new string[] { "NVSceneCapturer/Private" });
+		//PublicIncludePaths.AddRange(new string[] { "NVSceneCapturer/Public" });
  
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "Json", "JsonUtilities", "InputCore", "RHI", "RenderCore", "ShaderCore"});
         PublicDependencyModuleNames.AddRange(new string[] { "MovieSceneCapture", "ImageWrapper" });

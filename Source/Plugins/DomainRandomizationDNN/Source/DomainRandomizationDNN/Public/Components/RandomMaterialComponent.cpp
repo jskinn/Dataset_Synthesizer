@@ -131,6 +131,7 @@ void URandomMaterialComponent::PostEditChangeProperty(struct FPropertyChangedEve
         Super::PostEditChangeProperty(PropertyChangedEvent);
     }
 }
+#endif //WITH_EDITORONLY_DATA
 
 bool URandomMaterialComponent::HasMaterialToRandomize() const
 {
@@ -155,4 +156,3 @@ class UMaterialInterface* URandomMaterialComponent::GetNextMaterial()
     return NewMaterial;
 }
 
-#endif //WITH_EDITORONLY_DATA

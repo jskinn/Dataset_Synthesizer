@@ -12,7 +12,6 @@
 #include "NVSceneManager.h"
 #include "NVAnnotatedActor.h"
 #include "NVSceneDataHandler.h"
-#include "Factories/FbxAssetImportData.h"
 #include "Engine.h"
 #include "JsonObjectConverter.h"
 #if WITH_EDITOR

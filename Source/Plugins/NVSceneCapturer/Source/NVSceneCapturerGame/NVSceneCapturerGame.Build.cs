@@ -11,7 +11,7 @@ public class NVSceneCapturerGame : ModuleRules
 {
 	public NVSceneCapturerGame(ReadOnlyTargetRules Target) : base(Target)
 	{
-		PublicIncludePaths.AddRange(new string[] { "NVSceneCapturerGame/Public" });
+		//PublicIncludePaths.AddRange(new string[] { "NVSceneCapturerGame/Public" });
  
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "Json", "JsonUtilities", "InputCore", "RHI", "ImageWrapper" });
         PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore", "UMG" });

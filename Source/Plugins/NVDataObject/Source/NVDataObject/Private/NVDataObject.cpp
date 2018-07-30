@@ -7,6 +7,7 @@
 #include "NVDataObjectModule.h"
 #include "Components/ChildActorComponent.h"
 #include "EditorFramework/AssetImportData.h"
+#include "FileHelper.h"
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
 #include "JsonObjectConverter.h"

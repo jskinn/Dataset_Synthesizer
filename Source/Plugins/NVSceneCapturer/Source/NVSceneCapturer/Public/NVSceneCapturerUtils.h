@@ -16,6 +16,8 @@
 #include "Engine/TextureRenderTarget2D.h"
 #include "JsonObjectConverter.h"
 #include "Json.h"
+#include "Components/ActorComponent.h"
+#include "Components/MeshComponent.h"
 #include "NVCameraSettings.h"
 #include "NVSceneCapturerUtils.generated.h"
 

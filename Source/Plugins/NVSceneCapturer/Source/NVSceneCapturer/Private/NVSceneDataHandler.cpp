@@ -14,11 +14,11 @@
 #include "NVAnnotatedActor.h"
 #include "NVSceneManager.h"
 #include "Engine.h"
-#include "Factories/FbxAssetImportData.h"
 #include "JsonObjectConverter.h"
 #if WITH_EDITOR
 #include "UnrealEdGlobals.h"
 #include "Editor/UnrealEdEngine.h"
+#include "Factories/FbxAssetImportData.h"
 #endif
 
 //================================== UNVSceneDataExporter ==================================//
@@ -180,9 +180,9 @@ void UNVSceneDataExporter::ExportCapturerSettings()
                         UStaticMesh* ActorStaticMesh = ActorMeshComp->GetStaticMesh();
                         if (ActorStaticMesh)
                         {
-                            UFbxAssetImportData* FbxAssetImportData = Cast<UFbxAssetImportData>(ActorStaticMesh->AssetImportData);
                             FMatrix ImportMatrix = FMatrix::Identity;
-
+# if WITH_EDITOR
+                            UFbxAssetImportData* FbxAssetImportData = Cast<UFbxAssetImportData>(ActorStaticMesh->AssetImportData);
                             if (FbxAssetImportData)
                             {
                                 FTransform AssetImportTransform(
@@ -193,6 +193,7 @@ void UNVSceneDataExporter::ExportCapturerSettings()
 
                                 ImportMatrix = AssetImportTransform.ToMatrixWithScale();
                             }
+#endif //WITH_EDITOR
 
                             const FTransform& RelativeTransform = ActorMeshComp->GetRelativeTransform();
                             const FMatrix& RelativeToActorMatrix = RelativeTransform.ToMatrixWithScale();
