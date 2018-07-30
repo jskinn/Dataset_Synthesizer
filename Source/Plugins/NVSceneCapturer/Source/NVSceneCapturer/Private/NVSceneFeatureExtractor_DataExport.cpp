@@ -17,6 +17,7 @@
 #include "EngineUtils.h"
 #include "Engine/CollisionProfile.h"
 #include "Components/DrawFrustumComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "PhysicsEngine/AggregateGeom.h"
 #include "PhysicsEngine/BodySetup.h"

@@ -71,7 +71,7 @@ FNVCuboidData::FNVCuboidData()
 
     Center = FVector::ZeroVector;
     Rotation = FQuat::Identity;
-    LocalBox = FBox();
+    LocalBox = FBox(EForceInit::ForceInitToZero);
 }
 
 FNVCuboidData::FNVCuboidData(const FBox& AABB)
@@ -856,7 +856,7 @@ namespace NVSceneCapturerUtils
                                    *StaticMesh->GetName(), VertexesCount);
                         }
 
-                        for (uint32 i = 0; i < VertexesCount; i++)
+                        for (uint32 i = 0; i < MeshVertexBuffer.GetNumVertices(); i++)
                         {
                             const FVector& VertexPosition = MeshVertexBuffer.VertexPosition(i);
                             LocalOOBB += VertexPosition;

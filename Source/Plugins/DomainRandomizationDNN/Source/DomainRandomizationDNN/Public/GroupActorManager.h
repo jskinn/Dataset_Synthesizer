@@ -97,6 +97,8 @@ protected: // Transient
     UPROPERTY(Transient)
     float CountdownUntilNextSpawn;
 
+    void DestroyManagedActors();
+
 #if WITH_EDITORONLY_DATA
     virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
     static void AddReferencedObjects(UObject* InThis, FReferenceCollector& Collector);
@@ -107,7 +109,6 @@ protected:
 
     void UpdateProxyMeshes();
     void UpdateProxyMeshesVisibility();
-    void DestroyManagedActors();
 
 #endif // WITH_EDITORONLY_DATA
 };

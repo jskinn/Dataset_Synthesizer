@@ -6,6 +6,7 @@
 
 #include "NVSceneCapturerModule.h"
 #include "NVSceneCaptureComponent2D.h"
+#include "Engine.h"
 #include "Engine/TextureRenderTarget2D.h"
 
 DEFINE_LOG_CATEGORY(LogNVSceneCapturerComponent2D);
