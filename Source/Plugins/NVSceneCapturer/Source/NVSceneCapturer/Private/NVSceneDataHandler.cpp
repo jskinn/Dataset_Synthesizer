@@ -139,8 +139,8 @@ void UNVSceneDataExporter::ExportCapturerSettings()
     ensure(World);
     if (World)
     {
-        TArray<FString> ActorClassNames;
-        ActorClassNames.Reset();
+        //TArray<FString> ActorClassNames;
+        //ActorClassNames.Reset();
 
 	    ANVSceneManager* SceneManager = ANVSceneManager::GetANVSceneManagerPtr();
         // NOTE: We should keep a list of all the actors that we want to annotate
@@ -155,10 +155,10 @@ void UNVSceneDataExporter::ExportCapturerSettings()
                 {
                     const FString& ActorClassName = Tag->Tag;
                     // Don't process the instanced actor of the same class more than once
-                    if (ActorClassNames.Contains(ActorClassName))
+                    /*if (ActorClassNames.Contains(ActorClassName))
                     {
                         continue;
-                    }
+                    }*/
 
                     FNCapturerSettingExportedActorData ExportActorData;
                     ExportActorData.Class = Tag->Tag;
@@ -216,7 +216,7 @@ void UNVSceneDataExporter::ExportCapturerSettings()
                             SceneAnnotatedActorData.exported_objects.Add(ExportActorData);
                             SceneAnnotatedActorData.exported_object_classes.Add(ActorClassName);
 
-                            ActorClassNames.Add(ActorClassName);
+                            //ActorClassNames.Add(ActorClassName);
                         }
                     }
                 }
