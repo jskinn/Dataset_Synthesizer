@@ -300,7 +300,7 @@ namespace NVSceneCapturerUtils
                                        FVector(0.f, 0.f, 0.f)  // W
                                    );
 
-	const uint32 MaxVertexColorID = (1 << 24) - 1;
+	const uint32 MaxVertexColorID = (1 << 21) - 1;
 
     FQuat ConvertQuaternionToOpenCVCoordinateSystem(const FQuat& InQuat)
     {
@@ -680,10 +680,11 @@ namespace NVSceneCapturerUtils
 		}
 
 		FColor OutColor;
-		OutColor.R = (Value >> 16) & 255;
-		OutColor.G = (Value >> 8) & 255;
-		OutColor.B = Value & 255;
+		OutColor.R = (Value >> 13) & 254;
+		OutColor.G = (Value >> 6) & 254;
+		OutColor.B = (Value << 1) & 254;
 		OutColor.A = 255;
+        // To Decode, do ((R & 254) << 13) | ((G & 254) << 6) | ((B & 254) >> 1)
 
 		return OutColor;
 	}
