@@ -158,7 +158,7 @@ bool UNVSceneFeatureExtractor_AnnotationData::GatherActorData(const AActor* Chec
         const FMatrix& WorldToCameraMatrix_OpenCV = WorldToCameraMatrix_UE4 * NVSceneCapturerUtils::UE4ToOpenCVMatrix;
 
         const FTransform& ActorToWorldTransform = CheckActor->GetActorTransform();
-        const FMatrix& ActorToWorldMatrix_UE4 = ActorToWorldTransform.ToMatrixWithScale();
+        const FMatrix& ActorToWorldMatrix_UE4 = ActorToWorldTransform.ToMatrixNoScale();
         const FMatrix& ActorToWorldMatrix_OpenCV = ActorToWorldMatrix_UE4 * NVSceneCapturerUtils::UE4ToOpenCVMatrix;
         const FMatrix& ActorToCameraMatrix_UE4 = ActorToWorldMatrix_UE4 * WorldToCameraMatrix_UE4;
         const FMatrix& ActorToCameraMatrix_OpenCV = ActorToWorldMatrix_UE4 * WorldToCameraMatrix_UE4 * NVSceneCapturerUtils::UE4ToOpenCVMatrix;
