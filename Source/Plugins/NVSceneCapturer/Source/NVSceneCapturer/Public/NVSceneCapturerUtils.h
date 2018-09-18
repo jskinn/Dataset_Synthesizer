@@ -543,10 +543,12 @@ public:
     void SetFrameCount(int NewFrameCount);
     void AddFrameDuration(float NewDuration, bool bIncreaseFrame = false);
 
+    UPROPERTY(BlueprintReadOnly, Category = "Frame Count")
+    int32 TotalFrameCount;
+
 protected:
     void UpdateFPS();
 
-    int32 TotalFrameCount;
     float CachedFPS;
     int FPSAccumulatedFrames;
     float FPSAccumulatedDuration;
