@@ -16,9 +16,9 @@
 #include "Engine.h"
 #include "JsonObjectConverter.h"
 #if WITH_EDITOR
+#include "Factories/FbxAssetImportData.h"
 #include "UnrealEdGlobals.h"
 #include "Editor/UnrealEdEngine.h"
-#include "Factories/FbxAssetImportData.h"
 #endif
 
 //================================== UNVSceneDataExporter ==================================//
@@ -77,7 +77,7 @@ bool UNVSceneDataExporter::HandleSceneAnnotationData(const TSharedPtr<FJsonObjec
 
 void UNVSceneDataExporter::OnStartCapturingSceneData()
 {
-    if (!ImageExporterThread)
+    if (!ImageExporterThread.IsValid())
     {
         ImageExporterThread = TUniquePtr<FNVImageExporter_Thread>(new FNVImageExporter_Thread(ImageWrapperModule));
     }
@@ -180,9 +180,10 @@ void UNVSceneDataExporter::ExportCapturerSettings()
                         UStaticMesh* ActorStaticMesh = ActorMeshComp->GetStaticMesh();
                         if (ActorStaticMesh)
                         {
-                            FMatrix ImportMatrix = FMatrix::Identity;
-# if WITH_EDITOR
+#if WITH_EDITOR
                             UFbxAssetImportData* FbxAssetImportData = Cast<UFbxAssetImportData>(ActorStaticMesh->AssetImportData);
+                            FMatrix ImportMatrix = FMatrix::Identity;
+
                             if (FbxAssetImportData)
                             {
                                 FTransform AssetImportTransform(
@@ -193,7 +194,6 @@ void UNVSceneDataExporter::ExportCapturerSettings()
 
                                 ImportMatrix = AssetImportTransform.ToMatrixWithScale();
                             }
-#endif //WITH_EDITOR
 
                             const FTransform& RelativeTransform = ActorMeshComp->GetRelativeTransform();
                             const FMatrix& RelativeToActorMatrix = RelativeTransform.ToMatrixWithScale();
@@ -217,6 +217,7 @@ void UNVSceneDataExporter::ExportCapturerSettings()
                             SceneAnnotatedActorData.exported_object_classes.Add(ActorClassName);
 
                             //ActorClassNames.Add(ActorClassName);
+#endif // WITH_EDITOR
                         }
                     }
                 }
@@ -280,7 +281,10 @@ void UNVSceneDataExporter::ExportCapturerSettings()
 
 void UNVSceneDataExporter::OnStopCapturingSceneData()
 {
-    ImageExporterThread.Reset();
+	if (ImageExporterThread.IsValid())
+	{
+		ImageExporterThread->Stop();
+	}
 }
 
 void UNVSceneDataExporter::OnCapturingCompleted()

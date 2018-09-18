@@ -10,6 +10,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Engine.h"
 #if WITH_EDITOR
+#include "Factories/FbxAssetImportData.h"
 #include "UnrealEdGlobals.h"
 #include "Editor/UnrealEdEngine.h"
 #include "Factories/FbxAssetImportData.h"
@@ -245,6 +246,7 @@ FMatrix ANVAnnotatedActor::GetMeshInitialMatrix() const
 #if WITH_EDITORONLY_DATA
     if (ActorStaticMesh)
     {
+#if WITH_EDITOR
         UFbxAssetImportData* FbxAssetImportData = Cast<UFbxAssetImportData>(ActorStaticMesh->AssetImportData);
         FMatrix MeshImportMatrix = FMatrix::Identity;
 
@@ -271,6 +273,7 @@ FMatrix ANVAnnotatedActor::GetMeshInitialMatrix() const
         MatY = -MatY;
         MeshInitialMatrix_OpenCV.SetAxes(nullptr, &MatY, nullptr);
         ResultFMatrix = MeshInitialMatrix_OpenCV;
+#endif // WITH_EDITOR
     }
 #endif // WITH_EDITORONLY_DATA
     return ResultFMatrix;
