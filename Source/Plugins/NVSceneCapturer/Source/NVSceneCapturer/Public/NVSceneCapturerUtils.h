@@ -493,6 +493,9 @@ public: // Editor properties
     UPROPERTY(EditAnywhere, Category = CapturerSettings, meta = (EditCondition=bUseExplicitCameraIntrinsic))
     FCameraIntrinsicSettings CameraIntrinsicSettings;
 
+    UPROPERTY(EditAnywhere, AdvancedDisplay, Category = CapturerSettings)
+    FPostProcessSettings PostProcessSettings;
+
     UPROPERTY(VisibleAnywhere, AdvancedDisplay, Category = CapturerSettings)
     FMatrix CameraIntrinsicMatrix;
 

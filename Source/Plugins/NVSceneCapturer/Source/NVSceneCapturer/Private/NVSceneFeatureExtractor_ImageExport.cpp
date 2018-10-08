@@ -85,6 +85,7 @@ UNVSceneCaptureComponent2D* UNVSceneFeatureExtractor_PixelData::CreateSceneCaptu
 
             NewSceneCaptureComp2D->CaptureSource = CaptureSource;
 
+            NewSceneCaptureComp2D->PostProcessSettings = FPostProcessSettings(CapturerSettings.PostProcessSettings);
             if (PostProcessMaterialInstance)
             {
                 FPostProcessSettings& SceneCapturePPS = NewSceneCaptureComp2D->PostProcessSettings;
@@ -92,23 +93,24 @@ UNVSceneCaptureComponent2D* UNVSceneFeatureExtractor_PixelData::CreateSceneCaptu
             }
             NewSceneCaptureComp2D->PostProcessBlendWeight = PostProcessBlendWeight;
 
-            if (bOnlyShowTrainingActors)
+            UWorld* World = GetWorld();
+            for (TActorIterator<AActor> ActorIt(World); ActorIt; ++ActorIt)
             {
-                UWorld* World = GetWorld();
-
-                // TODO: Should create a TrainingActor class to handle actors we want to export
-                // Let those actor register with the exporter so we don't need to do a loop through all the actor like this every time we export
-                // NOTE: Can keep 1 relevant actor list on the exporter actor and all the exporter components can use it too
-                for (TActorIterator<AActor> ActorIt(World); ActorIt; ++ActorIt)
+                AActor* CheckActor = *ActorIt;
+                if (CheckActor)
                 {
-                    AActor* CheckActor = *ActorIt;
-                    if (CheckActor)
+                    if (bOnlyShowTrainingActors)
                     {
                         UNVCapturableActorTag* Tag = Cast<UNVCapturableActorTag>(CheckActor->GetComponentByClass(UNVCapturableActorTag::StaticClass()));
                         if (Tag && Tag->bIncludeMe)
                         {
                             NewSceneCaptureComp2D->ShowOnlyActorComponents(CheckActor);
                         }
+                    }
+                    else if (CheckActor->ActorHasTag(FName(TEXT("transparent"))))
+                    {
+                        // Hide actirs with the tag 'transparent', so that we can see through glass walls
+                        NewSceneCaptureComp2D->HideActorComponents(CheckActor);
                     }
                 }
             }
@@ -179,7 +181,9 @@ void UNVSceneFeatureExtractor_PixelData::UpdateCapturerSettings()
             auto& SceneCaptureComp2D = SceneCaptureComp2DData.SceneCaptureComp2D;
             if (SceneCaptureComp2D)
             {
-                SceneCaptureComp2D->FOVAngle = OwnerViewpoint->GetCapturerSettings().FOVAngle;
+                const auto& CapturerSettings = OwnerViewpoint->GetCapturerSettings();
+                SceneCaptureComp2D->FOVAngle = CapturerSettings.FOVAngle;
+                //SceneCaptureComp2D->PostProcessSettings = FPostProcessSettings(CapturerSettings.PostProcessSettings);
             }
         }
     }

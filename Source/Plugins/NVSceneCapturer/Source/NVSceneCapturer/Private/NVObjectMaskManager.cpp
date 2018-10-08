@@ -145,8 +145,8 @@ void UNVObjectMaskMananger::ApplyVertexColorMaskToActor(AActor* CheckActor, uint
 	}
 	else
 	{
-		const FColor& MaskVertexColor = NVSceneCapturerUtils::ConvertInt32ToVertexColor(MaskId);
-		NVSceneCapturerUtils::SetMeshVertexColor(CheckActor, MaskVertexColor);
+        const FColor& MaskVertexColor = NVSceneCapturerUtils::ConvertInt32ToVertexColor(MaskId);
+        NVSceneCapturerUtils::SetMeshVertexColor(CheckActor, MaskVertexColor);
 
 #if WITH_EDITOR
 		// Mark the actor as selected so it will show up on the vertex color view mode
