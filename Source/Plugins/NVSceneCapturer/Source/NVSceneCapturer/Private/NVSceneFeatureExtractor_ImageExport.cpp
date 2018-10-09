@@ -93,24 +93,19 @@ UNVSceneCaptureComponent2D* UNVSceneFeatureExtractor_PixelData::CreateSceneCaptu
             }
             NewSceneCaptureComp2D->PostProcessBlendWeight = PostProcessBlendWeight;
 
-            UWorld* World = GetWorld();
-            for (TActorIterator<AActor> ActorIt(World); ActorIt; ++ActorIt)
+            if (bOnlyShowTrainingActors)
             {
-                AActor* CheckActor = *ActorIt;
-                if (CheckActor)
+                UWorld* World = GetWorld();
+                for (TActorIterator<AActor> ActorIt(World); ActorIt; ++ActorIt)
                 {
-                    if (bOnlyShowTrainingActors)
+                    AActor* CheckActor = *ActorIt;
+                    if (CheckActor)
                     {
                         UNVCapturableActorTag* Tag = Cast<UNVCapturableActorTag>(CheckActor->GetComponentByClass(UNVCapturableActorTag::StaticClass()));
                         if (Tag && Tag->bIncludeMe)
                         {
                             NewSceneCaptureComp2D->ShowOnlyActorComponents(CheckActor);
                         }
-                    }
-                    else if (CheckActor->ActorHasTag(FName(TEXT("transparent"))))
-                    {
-                        // Hide actirs with the tag 'transparent', so that we can see through glass walls
-                        NewSceneCaptureComp2D->HideActorComponents(CheckActor);
                     }
                 }
             }
@@ -274,6 +269,17 @@ void UNVSceneFeatureExtractor_StencilMask::UpdateSettings()
 {
     Super::UpdateSettings();
 
+    // Hide actors with the tag 'transparent', so that we can see through glass walls
+    UWorld* World = GetWorld();
+    for (TActorIterator<AActor> ActorIt(World); ActorIt; ++ActorIt)
+    {
+        AActor* CheckActor = *ActorIt;
+        if (CheckActor && CheckActor->ActorHasTag(FName(TEXT("transparent"))))
+        {
+            SceneCaptureComponent->HideActorComponents(CheckActor);
+        }
+    }
+
     if (IsEnabled())
     {
         // Make sure the engine render to CustomDepth buffer
@@ -291,6 +297,17 @@ UNVSceneFeatureExtractor_VertexColorMask::UNVSceneFeatureExtractor_VertexColorMa
 void UNVSceneFeatureExtractor_VertexColorMask::UpdateSettings()
 {
     Super::UpdateSettings();
+
+    // Hide actors with the tag 'transparent', so that we can see through glass walls
+    UWorld* World = GetWorld();
+    for (TActorIterator<AActor> ActorIt(World); ActorIt; ++ActorIt)
+    {
+        AActor* CheckActor = *ActorIt;
+        if (CheckActor && CheckActor->ActorHasTag(FName(TEXT("transparent"))))
+        {
+            SceneCaptureComponent->HideActorComponents(CheckActor);
+        }
+    }
 
     // TODO: Check if there's any NVObjectMaskManager_VertexColor set up in the level and give out warning when that happened
     if (SceneCaptureComponent)
