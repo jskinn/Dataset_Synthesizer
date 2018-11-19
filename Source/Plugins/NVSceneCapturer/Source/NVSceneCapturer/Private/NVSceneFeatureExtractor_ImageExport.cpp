@@ -64,6 +64,11 @@ UNVSceneCaptureComponent2D* UNVSceneFeatureExtractor_PixelData::CreateSceneCaptu
             {
                 NewSceneCaptureComp2D->ShowFlagSettings = OverrideShowFlagSettings;
             }
+            else
+            {
+                NewSceneCaptureComp2D->ShowFlags.SetAntiAliasing(true);
+                NewSceneCaptureComp2D->ShowFlags.SetMotionBlur(true);
+            }
 
             const auto& CapturerSettings = OwnerViewpoint->GetCapturerSettings();
 
@@ -324,6 +329,7 @@ void UNVSceneFeatureExtractor_VertexColorMask::UpdateSettings()
         OverrideShowFlags.SetBSPTriangles(true);
         OverrideShowFlags.SetVertexColors(true);
         OverrideShowFlags.SetPostProcessing(false);
+        OverrideShowFlags.SetAtmosphericFog(false);
         OverrideShowFlags.SetHMDDistortion(false);
         OverrideShowFlags.SetAntiAliasing(false);
         OverrideShowFlags.SetMotionBlur(false);
@@ -332,6 +338,10 @@ void UNVSceneFeatureExtractor_VertexColorMask::UpdateSettings()
         OverrideShowFlags.SetVignette(false);
         OverrideShowFlags.SetTonemapper(false);
         OverrideShowFlags.SetColorGrading(false);
+
+        // This fixes an issue where the ground truth was not of the range 0-255
+        SceneCaptureComponent->PostProcessSettings.bOverride_AutoExposureBias = true;
+        SceneCaptureComponent->PostProcessSettings.AutoExposureBias = 0.0f;
 
         if (SceneCaptureComponent->TextureTarget)
         {
